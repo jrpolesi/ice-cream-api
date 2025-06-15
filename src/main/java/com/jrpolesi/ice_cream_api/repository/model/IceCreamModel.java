@@ -28,7 +28,22 @@ public class IceCreamModel {
   public IceCreamModel() {
   }
 
+  private IceCreamModel(Integer id, String flavor, String size, BigDecimal price) {
+    this.id = id;
+    this.flavor = flavor;
+    this.size = size;
+    this.price = price;
+  }
+
   public IceCream toEntity() {
     return IceCream.of(id, flavor, size, price);
+  }
+
+  public static IceCreamModel fromEntity(IceCream iceCream) {
+    return new IceCreamModel(
+        iceCream.getId(),
+        iceCream.getFlavor(),
+        iceCream.getSize(),
+        iceCream.getPrice());
   }
 }
