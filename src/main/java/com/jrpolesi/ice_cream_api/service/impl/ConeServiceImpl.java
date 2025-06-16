@@ -1,10 +1,13 @@
 package com.jrpolesi.ice_cream_api.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jrpolesi.ice_cream_api.dto.CreateConeRequestDto;
 import com.jrpolesi.ice_cream_api.dto.CreateConeResponseDto;
+import com.jrpolesi.ice_cream_api.dto.GetConeResponseDto;
 import com.jrpolesi.ice_cream_api.entities.Cone;
 import com.jrpolesi.ice_cream_api.gateway.IConeGateway;
 import com.jrpolesi.ice_cream_api.service.IConeService;
@@ -23,13 +26,20 @@ public class ConeServiceImpl implements IConeService {
 
     final var createCone = coneGateway.save(coneIntent);
 
-    return mapToDto(createCone);
+    return CreateConeResponseDto.fromEntity(createCone);
   }
 
-  private CreateConeResponseDto mapToDto(Cone cone) {
-    return new CreateConeResponseDto(
-        cone.getId(),
-        cone.getType(),
-        cone.getSize());
+  @Override
+  public List<GetConeResponseDto> getAllCones() {
+    final var cones = coneGateway.findAll();
+
+    return cones.stream().map(GetConeResponseDto::fromEntity).toList();
+  }
+
+  @Override
+  public GetConeResponseDto getConeById(int id) {
+    final var cone = coneGateway.findById(id);
+
+    return GetConeResponseDto.fromEntity(cone);
   }
 }
