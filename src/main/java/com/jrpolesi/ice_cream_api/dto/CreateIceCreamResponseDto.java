@@ -6,6 +6,7 @@ public record CreateIceCreamResponseDto (
     Integer id,
     String flavor,
     String size,
-    BigDecimal price
+    BigDecimal price,
+    Integer coneId
 ) {
 }

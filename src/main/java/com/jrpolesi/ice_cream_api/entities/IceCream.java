@@ -7,20 +7,22 @@ public class IceCream {
   private String flavor;
   private String size;
   private BigDecimal price;
+  private Cone cone;
 
-  private IceCream(Integer id, String flavor, String size, BigDecimal price) {
+  private IceCream(Integer id, String flavor, String size, BigDecimal price, Cone cone) {
     this.id = id;
     this.flavor = flavor;
     this.size = size;
     this.price = price;
+    this.cone = cone;
   }
 
-  public static IceCream with(String flavor, String size, BigDecimal price) {
-    return new IceCream(null, flavor, size, price);
+  public static IceCream with(String flavor, String size, BigDecimal price, Cone cone) {
+    return new IceCream(null, flavor, size, price, cone);
   }
 
-  public static IceCream of(Integer id, String flavor, String size, BigDecimal price) {
-    return new IceCream(id, flavor, size, price);
+  public static IceCream of(Integer id, String flavor, String size, BigDecimal price, Cone cone) {
+    return new IceCream(id, flavor, size, price, cone);
   }
 
   public Integer getId() {
@@ -37,5 +39,9 @@ public class IceCream {
 
   public BigDecimal getPrice() {
     return price;
+  }
+
+  public Cone getCone() {
+    return cone;
   }
 }

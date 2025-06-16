@@ -6,9 +6,11 @@ import com.jrpolesi.ice_cream_api.entities.IceCream;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class IceCreamModel {
@@ -25,18 +27,22 @@ public class IceCreamModel {
   @Column(name = "price", nullable = false)
   BigDecimal price;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  ConeModel cone;
+
   public IceCreamModel() {
   }
 
-  private IceCreamModel(Integer id, String flavor, String size, BigDecimal price) {
+  private IceCreamModel(Integer id, String flavor, String size, BigDecimal price, ConeModel cone) {
     this.id = id;
     this.flavor = flavor;
     this.size = size;
     this.price = price;
+    this.cone = cone;
   }
 
   public IceCream toEntity() {
-    return IceCream.of(id, flavor, size, price);
+    return IceCream.of(id, flavor, size, price, cone.toEntity());
   }
 
   public static IceCreamModel fromEntity(IceCream iceCream) {
@@ -44,6 +50,7 @@ public class IceCreamModel {
         iceCream.getId(),
         iceCream.getFlavor(),
         iceCream.getSize(),
-        iceCream.getPrice());
+        iceCream.getPrice(),
+        ConeModel.fromEntity(iceCream.getCone()));
   }
 }

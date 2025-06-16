@@ -9,19 +9,22 @@ import com.jrpolesi.ice_cream_api.dto.CreateIceCreamRequestDto;
 import com.jrpolesi.ice_cream_api.dto.CreateIceCreamResponseDto;
 import com.jrpolesi.ice_cream_api.dto.GetIceCreamResponseDto;
 import com.jrpolesi.ice_cream_api.entities.IceCream;
-import com.jrpolesi.ice_cream_api.repository.IIceCreamRepository;
-import com.jrpolesi.ice_cream_api.repository.model.IceCreamModel;
+import com.jrpolesi.ice_cream_api.gateway.IConeGateway;
+import com.jrpolesi.ice_cream_api.gateway.IIceCreamGateway;
 import com.jrpolesi.ice_cream_api.service.IIceCreamService;
 
 @Service
 public class IceCreamServiceImpl implements IIceCreamService {
 
   @Autowired
-  private IIceCreamRepository iceCreamRepository;
+  private IIceCreamGateway iceCreamGateway;
+
+  @Autowired
+  private IConeGateway coneGateway;
 
   public List<GetIceCreamResponseDto> getAllIceCreams() {
 
-    final var iceCreams = iceCreamRepository.findAll().stream().map(m -> m.toEntity()).toList();
+    final var iceCreams = iceCreamGateway.findAll();
 
     return iceCreams.stream()
         .map(this::mapToDto)
@@ -33,22 +36,28 @@ public class IceCreamServiceImpl implements IIceCreamService {
         iceCream.getId(),
         iceCream.getFlavor(),
         iceCream.getSize(),
-        iceCream.getPrice());
+        iceCream.getPrice(),
+        iceCream.getCone());
   }
 
   @Override
   public CreateIceCreamResponseDto createIceCream(CreateIceCreamRequestDto iceCreamRequestDto) {
+
+    final var cone = coneGateway.findById(iceCreamRequestDto.coneId());
+
     final var iceCream = IceCream.with(
         iceCreamRequestDto.flavor(),
         iceCreamRequestDto.size(),
-        iceCreamRequestDto.price());
+        iceCreamRequestDto.price(),
+        cone);
 
-    final var savedIceCream = iceCreamRepository.save(IceCreamModel.fromEntity(iceCream)).toEntity();
+    final var savedIceCream = iceCreamGateway.save(iceCream);
 
     return new CreateIceCreamResponseDto(
         savedIceCream.getId(),
         savedIceCream.getFlavor(),
         savedIceCream.getSize(),
-        savedIceCream.getPrice());
+        savedIceCream.getPrice(),
+        savedIceCream.getCone().getId());
   }
 }
