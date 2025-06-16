@@ -20,6 +20,9 @@ import com.jrpolesi.ice_cream_api.dto.CreateConeResponseDto;
 import com.jrpolesi.ice_cream_api.dto.GetConeResponseDto;
 import com.jrpolesi.ice_cream_api.service.IConeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 
@@ -34,6 +37,10 @@ public class ConeController {
   @Autowired
   private ConeConfigurations coneConfigs;
 
+  @Operation(summary = "Create a new cone")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Cone created successfully")
+  })
   @PostMapping
   public ResponseEntity<CreateConeResponseDto> createCone(
       @RequestBody @Valid CreateConeRequestDto coneRequestDto) {
@@ -42,6 +49,12 @@ public class ConeController {
     return ResponseEntity.status(HttpStatus.CREATED).body(cone);
   }
 
+  @Operation(summary = "Get all cones or filter by size")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "List of cones returned successfully"),
+      @ApiResponse(responseCode = "400", description = "Invalid size parameter"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   @GetMapping
   public ResponseEntity<List<GetConeResponseDto>> getCone(
       @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size param must be a single character") String size) {
@@ -57,6 +70,7 @@ public class ConeController {
     return ResponseEntity.status(HttpStatus.OK).body(cones);
   }
 
+  @Operation(summary = "Get cone by ID")
   @GetMapping("/{id}")
   public ResponseEntity<GetConeResponseDto> getConeById(@PathVariable int id) {
     final var cone = coneService.getConeById(id);

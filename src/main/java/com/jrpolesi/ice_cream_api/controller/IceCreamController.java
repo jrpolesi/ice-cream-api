@@ -18,6 +18,9 @@ import com.jrpolesi.ice_cream_api.dto.CreateIceCreamResponseDto;
 import com.jrpolesi.ice_cream_api.dto.GetIceCreamResponseDto;
 import com.jrpolesi.ice_cream_api.service.IIceCreamService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 
@@ -32,6 +35,10 @@ public class IceCreamController {
   // this.iceCreamService = iceCreamService;
   // }
 
+  @Operation(summary = "Create a new ice cream")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Ice cream created successfully")
+  })
   @PostMapping("/ice-cream")
   public ResponseEntity<CreateIceCreamResponseDto> createIceCream(
       @RequestBody @Valid CreateIceCreamRequestDto iceCreamRequestDto) {
@@ -41,6 +48,7 @@ public class IceCreamController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdIceCream);
   }
 
+  @Operation(summary = "Get all ice creams or filter by size")
   @GetMapping("/ice-cream")
   public ResponseEntity<List<GetIceCreamResponseDto>> getIceCream(
       @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size param must be a single character") String size) {
@@ -50,6 +58,9 @@ public class IceCreamController {
     return ResponseEntity.status(HttpStatus.OK).body(iceCreams);
   }
 
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Ice cream returned successfully")
+  })
   @GetMapping("/ice-cream/{id}")
   public ResponseEntity<GetIceCreamResponseDto> getIceCreamById(@PathVariable Integer id) {
 
