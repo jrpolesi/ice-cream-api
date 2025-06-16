@@ -23,6 +23,12 @@ A REST API for managing ice cream cones and ice creams. Built with Spring Boot, 
 
    The API will be available at `http://localhost:8080`.
 
+## Swagger UI
+
+To access the API documentation, navigate to:
+
+[http://localhost:8080/docs](http://localhost:8080/docs)
+
 ## API Endpoints & Example CURLs
 
 ### Cone Endpoints
