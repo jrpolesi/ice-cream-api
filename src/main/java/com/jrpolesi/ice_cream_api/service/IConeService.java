@@ -11,5 +11,7 @@ public interface IConeService {
 
   List<GetConeResponseDto> getAllCones();
 
+  List<GetConeResponseDto> searchAllConesBySize(String size);
+
   GetConeResponseDto getConeById(int id);
 }

@@ -37,6 +37,13 @@ public class ConeServiceImpl implements IConeService {
   }
 
   @Override
+  public List<GetConeResponseDto> searchAllConesBySize(String size) {
+    final var cones = coneGateway.findAllBySize(size);
+
+    return cones.stream().map(GetConeResponseDto::fromEntity).toList();
+  }
+
+  @Override
   public GetConeResponseDto getConeById(int id) {
     final var cone = coneGateway.findById(id);
 

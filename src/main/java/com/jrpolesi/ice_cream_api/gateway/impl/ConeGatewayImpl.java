@@ -36,4 +36,12 @@ public class ConeGatewayImpl implements IConeGateway {
         .map(ConeModel::toEntity)
         .toList();
   }
+
+  @Override
+  public List<Cone> findAllBySize(String size) {
+    return coneRepository.findAllBySize(size)
+        .stream()
+        .map(ConeModel::toEntity)
+        .toList();
+  }
 }

@@ -9,5 +9,7 @@ public interface IConeGateway {
 
   List<Cone> findAll();
 
+  List<Cone> findAllBySize(String size);
+
   Cone save(Cone cone);
 }

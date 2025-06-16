@@ -43,7 +43,7 @@ public class IceCreamController {
 
   @GetMapping("/ice-cream")
   public ResponseEntity<List<GetIceCreamResponseDto>> getIceCream(
-      @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size must be a single character") String size) {
+      @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size param must be a single character") String size) {
 
     final var iceCreams = iceCreamService.getAllIceCreams(size);
 

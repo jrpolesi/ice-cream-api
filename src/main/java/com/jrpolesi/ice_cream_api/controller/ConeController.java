@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jrpolesi.ice_cream_api.dto.CreateConeRequestDto;
@@ -18,8 +20,10 @@ import com.jrpolesi.ice_cream_api.dto.GetConeResponseDto;
 import com.jrpolesi.ice_cream_api.service.IConeService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 
 @RestController
+@Validated
 @RequestMapping("/cone")
 public class ConeController {
 
@@ -35,8 +39,16 @@ public class ConeController {
   }
 
   @GetMapping
-  public ResponseEntity<List<GetConeResponseDto>> getCone() {
-    final var cones = coneService.getAllCones();
+  public ResponseEntity<List<GetConeResponseDto>> getCone(
+      @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size param must be a single character") String size) {
+
+    List<GetConeResponseDto> cones;
+
+    if (size != null) {
+      cones = coneService.searchAllConesBySize(size);
+    } else {
+      cones = coneService.getAllCones();
+    }
 
     return ResponseEntity.status(HttpStatus.OK).body(cones);
   }
