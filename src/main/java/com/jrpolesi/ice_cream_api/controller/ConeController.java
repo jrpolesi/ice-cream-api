@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jrpolesi.ice_cream_api.configurations.ConeConfigurations;
 import com.jrpolesi.ice_cream_api.dto.CreateConeRequestDto;
 import com.jrpolesi.ice_cream_api.dto.CreateConeResponseDto;
 import com.jrpolesi.ice_cream_api.dto.GetConeResponseDto;
@@ -30,6 +31,9 @@ public class ConeController {
   @Autowired
   private IConeService coneService;
 
+  @Autowired
+  private ConeConfigurations coneConfigs;
+
   @PostMapping
   public ResponseEntity<CreateConeResponseDto> createCone(
       @RequestBody @Valid CreateConeRequestDto coneRequestDto) {
@@ -44,7 +48,7 @@ public class ConeController {
 
     List<GetConeResponseDto> cones;
 
-    if (size != null) {
+    if (coneConfigs.coneSearchProperties().isEnabled() && size != null) {
       cones = coneService.searchAllConesBySize(size);
     } else {
       cones = coneService.getAllCones();

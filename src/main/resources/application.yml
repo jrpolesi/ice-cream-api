@@ -1,5 +1,9 @@
 spring.application.name: ice-cream-api
 
+cone:
+  search:
+    enabled: true
+
 spring:
   datasource:
     url: jdbc:h2:mem:dbtest
