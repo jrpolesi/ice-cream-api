@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class ValidationExceptionHandler {
 
@@ -21,6 +23,18 @@ public class ValidationExceptionHandler {
     exception.getBindingResult().getFieldErrors()
         .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
+    return ResponseEntity.badRequest().body(errors);
+  }
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<Map<String, String>> handleConstraintViolationException(
+      ConstraintViolationException exception) {
+    Map<String, String> errors = new HashMap<>();
+    exception.getConstraintViolations().forEach(
+        violation -> errors.put(
+            violation.getPropertyPath().toString(),
+            violation.getMessage()));
     return ResponseEntity.badRequest().body(errors);
   }
 

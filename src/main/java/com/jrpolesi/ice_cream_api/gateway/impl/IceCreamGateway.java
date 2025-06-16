@@ -17,8 +17,8 @@ public class IceCreamGateway implements IIceCreamGateway {
   private IIceCreamRepository iceCreamRepository;
 
   @Override
-  public List<IceCream> findAll() {
-    return iceCreamRepository.findAll()
+  public List<IceCream> findAll(String size) {
+    return iceCreamRepository.findAllBySizeNullable(size)
         .stream()
         .map(iceCream -> iceCream.toEntity())
         .toList();

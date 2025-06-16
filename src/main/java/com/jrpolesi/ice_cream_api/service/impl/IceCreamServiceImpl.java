@@ -23,9 +23,9 @@ public class IceCreamServiceImpl implements IIceCreamService {
   private IConeGateway coneGateway;
 
   @Override
-  public List<GetIceCreamResponseDto> getAllIceCreams() {
+  public List<GetIceCreamResponseDto> getAllIceCreams(String size) {
 
-    final var iceCreams = iceCreamGateway.findAll();
+    final var iceCreams = iceCreamGateway.findAll(size);
 
     return iceCreams.stream()
         .map(GetIceCreamResponseDto::fromEntity)

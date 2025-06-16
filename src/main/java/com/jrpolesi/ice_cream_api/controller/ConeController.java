@@ -27,7 +27,8 @@ public class ConeController {
   private IConeService coneService;
 
   @PostMapping
-  public ResponseEntity<CreateConeResponseDto> createCone(@RequestBody @Valid CreateConeRequestDto coneRequestDto) {
+  public ResponseEntity<CreateConeResponseDto> createCone(
+      @RequestBody @Valid CreateConeRequestDto coneRequestDto) {
     final var cone = coneService.createCone(coneRequestDto);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(cone);
@@ -43,7 +44,7 @@ public class ConeController {
   @GetMapping("/{id}")
   public ResponseEntity<GetConeResponseDto> getConeById(@PathVariable int id) {
     final var cone = coneService.getConeById(id);
-    
+
     return ResponseEntity.status(HttpStatus.OK).body(cone);
   }
 }

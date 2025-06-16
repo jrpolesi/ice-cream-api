@@ -5,7 +5,7 @@ import java.util.List;
 import com.jrpolesi.ice_cream_api.entities.IceCream;
 
 public interface IIceCreamGateway {
-  List<IceCream> findAll();
+  List<IceCream> findAll(String size);
 
   IceCream findById(Integer id);
 

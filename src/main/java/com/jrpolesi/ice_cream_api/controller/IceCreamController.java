@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jrpolesi.ice_cream_api.dto.CreateIceCreamRequestDto;
@@ -17,7 +19,9 @@ import com.jrpolesi.ice_cream_api.dto.GetIceCreamResponseDto;
 import com.jrpolesi.ice_cream_api.service.IIceCreamService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 
+@Validated // This annotation is used to enable validation on RequestParam
 @RestController
 public class IceCreamController {
 
@@ -25,7 +29,7 @@ public class IceCreamController {
   private IIceCreamService iceCreamService;
 
   // public IceCreamController(IIceCreamService iceCreamService) {
-  //   this.iceCreamService = iceCreamService;
+  // this.iceCreamService = iceCreamService;
   // }
 
   @PostMapping("/ice-cream")
@@ -38,9 +42,10 @@ public class IceCreamController {
   }
 
   @GetMapping("/ice-cream")
-  public ResponseEntity<List<GetIceCreamResponseDto>> getIceCream() {
+  public ResponseEntity<List<GetIceCreamResponseDto>> getIceCream(
+      @RequestParam(required = false) @Size(min = 1, max = 1, message = "Size must be a single character") String size) {
 
-    final var iceCreams = iceCreamService.getAllIceCreams();
+    final var iceCreams = iceCreamService.getAllIceCreams(size);
 
     return ResponseEntity.status(HttpStatus.OK).body(iceCreams);
   }
