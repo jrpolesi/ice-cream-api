@@ -47,7 +47,7 @@ A REST API for managing ice cream cones and ice creams. Built with Spring Boot, 
 - **List Cones by Size**
 
   ```sh
-  curl http://localhost:8080/cone?size=M
+  curl "http://localhost:8080/cone?size=M"
   ```
 
 - **Get Cone by ID**
@@ -79,7 +79,7 @@ A REST API for managing ice cream cones and ice creams. Built with Spring Boot, 
 - **List Ice Creams by Size**
 
   ```sh
-  curl http://localhost:8080/ice-cream?size=M
+  curl "http://localhost:8080/ice-cream?size=M"
   ```
 
 - **Get Ice Cream by ID**
