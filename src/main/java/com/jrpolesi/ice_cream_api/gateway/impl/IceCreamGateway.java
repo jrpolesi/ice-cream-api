@@ -32,4 +32,11 @@ public class IceCreamGateway implements IIceCreamGateway {
         .save(iceCreamModel)
         .toEntity();
   }
+
+  @Override
+  public IceCream findById(Integer id) {
+    return iceCreamRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Ice cream not found with id: " + id))
+        .toEntity();
+  }
 }

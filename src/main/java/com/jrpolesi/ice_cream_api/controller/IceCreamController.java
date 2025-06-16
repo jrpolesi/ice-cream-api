@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,15 @@ public class IceCreamController {
   //   this.iceCreamService = iceCreamService;
   // }
 
+  @PostMapping("/ice-cream")
+  public ResponseEntity<CreateIceCreamResponseDto> createIceCream(
+      @RequestBody @Valid CreateIceCreamRequestDto iceCreamRequestDto) {
+
+    final var createdIceCream = iceCreamService.createIceCream(iceCreamRequestDto);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdIceCream);
+  }
+
   @GetMapping("/ice-cream")
   public ResponseEntity<List<GetIceCreamResponseDto>> getIceCream() {
 
@@ -35,11 +45,11 @@ public class IceCreamController {
     return ResponseEntity.status(HttpStatus.OK).body(iceCreams);
   }
 
-  @PostMapping("/ice-cream")
-  public ResponseEntity<CreateIceCreamResponseDto> createIceCream(@RequestBody @Valid CreateIceCreamRequestDto iceCreamRequestDto) {
+  @GetMapping("/ice-cream/{id}")
+  public ResponseEntity<GetIceCreamResponseDto> getIceCreamById(@PathVariable Integer id) {
 
-    final var createdIceCream = iceCreamService.createIceCream(iceCreamRequestDto);
+    final var iceCream = iceCreamService.getIceCreamById(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdIceCream);
+    return ResponseEntity.status(HttpStatus.OK).body(iceCream);
   }
 }

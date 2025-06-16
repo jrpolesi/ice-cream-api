@@ -10,4 +10,6 @@ public interface IIceCreamService {
   List<GetIceCreamResponseDto> getAllIceCreams();
 
   CreateIceCreamResponseDto createIceCream(CreateIceCreamRequestDto iceCreamRequestDto);
+
+  GetIceCreamResponseDto getIceCreamById(Integer id);
 }

@@ -22,22 +22,21 @@ public class IceCreamServiceImpl implements IIceCreamService {
   @Autowired
   private IConeGateway coneGateway;
 
+  @Override
   public List<GetIceCreamResponseDto> getAllIceCreams() {
 
     final var iceCreams = iceCreamGateway.findAll();
 
     return iceCreams.stream()
-        .map(this::mapToDto)
+        .map(GetIceCreamResponseDto::fromEntity)
         .toList();
   }
 
-  private GetIceCreamResponseDto mapToDto(IceCream iceCream) {
-    return new GetIceCreamResponseDto(
-        iceCream.getId(),
-        iceCream.getFlavor(),
-        iceCream.getSize(),
-        iceCream.getPrice(),
-        iceCream.getCone());
+  @Override
+  public GetIceCreamResponseDto getIceCreamById(Integer id) {
+    final var iceCream = iceCreamGateway.findById(id);
+
+    return GetIceCreamResponseDto.fromEntity(iceCream);
   }
 
   @Override
@@ -53,11 +52,6 @@ public class IceCreamServiceImpl implements IIceCreamService {
 
     final var savedIceCream = iceCreamGateway.save(iceCream);
 
-    return new CreateIceCreamResponseDto(
-        savedIceCream.getId(),
-        savedIceCream.getFlavor(),
-        savedIceCream.getSize(),
-        savedIceCream.getPrice(),
-        savedIceCream.getCone().getId());
+    return CreateIceCreamResponseDto.fromEntity(savedIceCream);
   }
 }
