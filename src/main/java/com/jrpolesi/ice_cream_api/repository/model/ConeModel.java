@@ -24,7 +24,7 @@ public class ConeModel {
   @Column(name = "type", nullable = false)
   String type;
 
-  @Column(name = "size", nullable = false)
+  @Column(name = "size", nullable = false, length = 1)
   String size;
 
   @OneToMany(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class ConeModel {
   }
 
   public Cone toEntity() {
-    return Cone.of(id, type, size);
+    return Cone.with(id, type, size);
   }
 
   public static ConeModel fromEntity(Cone cone) {

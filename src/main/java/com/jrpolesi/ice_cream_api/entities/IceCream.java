@@ -17,11 +17,11 @@ public class IceCream {
     this.cone = cone;
   }
 
-  public static IceCream with(String flavor, String size, BigDecimal price, Cone cone) {
+  public static IceCream create(String flavor, String size, BigDecimal price, Cone cone) {
     return new IceCream(null, flavor, size, price, cone);
   }
 
-  public static IceCream of(Integer id, String flavor, String size, BigDecimal price, Cone cone) {
+  public static IceCream with(Integer id, String flavor, String size, BigDecimal price, Cone cone) {
     return new IceCream(id, flavor, size, price, cone);
   }
 

@@ -44,7 +44,7 @@ public class IceCreamServiceImpl implements IIceCreamService {
 
     final var cone = coneGateway.findById(iceCreamRequestDto.coneId());
 
-    final var iceCream = IceCream.with(
+    final var iceCream = IceCream.create(
         iceCreamRequestDto.flavor(),
         iceCreamRequestDto.size(),
         iceCreamRequestDto.price(),

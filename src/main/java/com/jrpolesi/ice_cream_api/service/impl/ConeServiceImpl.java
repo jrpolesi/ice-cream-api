@@ -20,7 +20,7 @@ public class ConeServiceImpl implements IConeService {
 
   @Override
   public CreateConeResponseDto createCone(CreateConeRequestDto coneRequestDto) {
-    final var coneIntent = Cone.with(
+    final var coneIntent = Cone.create(
         coneRequestDto.type(),
         coneRequestDto.size());
 

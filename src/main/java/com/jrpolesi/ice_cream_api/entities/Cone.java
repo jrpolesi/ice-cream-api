@@ -11,11 +11,11 @@ public class Cone {
     this.size = size;
   }
 
-  public static Cone with(String type, String size) {
+  public static Cone create(String type, String size) {
     return new Cone(null, type, size);
   }
 
-  public static Cone of(Integer id, String type, String size) {
+  public static Cone with(Integer id, String type, String size) {
     return new Cone(id, type, size);
   }
 

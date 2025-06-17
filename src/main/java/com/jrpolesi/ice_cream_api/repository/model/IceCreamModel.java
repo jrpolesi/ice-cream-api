@@ -23,7 +23,7 @@ public class IceCreamModel {
   @Column(name = "flavor", nullable = false)
   String flavor;
 
-  @Column(name = "size", nullable = false)
+  @Column(name = "size", nullable = false, length = 1)
   String size;
 
   @Column(name = "price", nullable = false)
@@ -44,7 +44,7 @@ public class IceCreamModel {
   }
 
   public IceCream toEntity() {
-    return IceCream.of(id, flavor, size, price, cone.toEntity());
+    return IceCream.with(id, flavor, size, price, cone.toEntity());
   }
 
   public static IceCreamModel fromEntity(IceCream iceCream) {
