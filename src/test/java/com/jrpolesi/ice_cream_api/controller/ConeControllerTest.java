@@ -17,17 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jrpolesi.ice_cream_api.configurations.ConeConfigurations;
 import com.jrpolesi.ice_cream_api.dto.CreateConeRequestDto;
 import com.jrpolesi.ice_cream_api.dto.CreateConeResponseDto;
 import com.jrpolesi.ice_cream_api.dto.GetConeResponseDto;
 import com.jrpolesi.ice_cream_api.service.IConeService;
 
 @WebMvcTest(ConeController.class)
-@Import(com.jrpolesi.ice_cream_api.configurations.ConeConfigurations.class)
+@Import(ConeConfigurations.class)
+@TestPropertySource(properties = "cone.search.enabled=true")
 public class ConeControllerTest {
   @Autowired
   private MockMvc mockMvc;
