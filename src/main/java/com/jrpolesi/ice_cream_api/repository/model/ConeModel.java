@@ -50,4 +50,8 @@ public class ConeModel {
         cone.getType(),
         cone.getSize());
   }
+
+  public Integer getId() {
+    return id;
+  }
 }

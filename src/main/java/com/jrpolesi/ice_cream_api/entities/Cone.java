@@ -30,4 +30,8 @@ public class Cone {
   public String getSize() {
     return size;
   }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 }

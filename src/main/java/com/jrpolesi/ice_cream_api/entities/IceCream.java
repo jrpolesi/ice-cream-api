@@ -44,4 +44,8 @@ public class IceCream {
   public Cone getCone() {
     return cone;
   }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 }

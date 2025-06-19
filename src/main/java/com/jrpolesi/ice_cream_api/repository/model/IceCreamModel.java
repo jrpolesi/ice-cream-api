@@ -55,4 +55,8 @@ public class IceCreamModel {
         iceCream.getPrice(),
         ConeModel.fromEntity(iceCream.getCone()));
   }
+
+  public Integer getId() {
+    return id;
+  }
 }
