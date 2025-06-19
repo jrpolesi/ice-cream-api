@@ -44,9 +44,9 @@ public class ConeControllerTest {
     final var input = new CreateConeRequestDto("Waffle", "M");
     final var expectedOutput = new CreateConeResponseDto(1, input.type(), input.size());
 
-    // when
     when(coneService.createCone(input)).thenReturn(expectedOutput);
 
+    // when
     final var request = post("/cone")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(input));
@@ -108,14 +108,60 @@ public class ConeControllerTest {
   }
 
   @Test
+  public void givenConeId_whenCallsGetConeById_thenReturnsCone() throws Exception {
+    // given
+    final var cone = new GetConeResponseDto(1, "Waffle", "M");
+
+    when(coneService.getConeById(1)).thenReturn(cone);
+
+    // when
+    final var request = get("/cone/1")
+        .contentType(MediaType.APPLICATION_JSON);
+
+    final var response = mockMvc.perform(request);
+
+    // then
+    response.andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.id").value(cone.id()))
+        .andExpect(jsonPath("$.cone_type").value(cone.type()))
+        .andExpect(jsonPath("$.size").value(cone.size()));
+
+    verify(coneService, times(1)).getConeById(eq(1));
+  }
+
+  @Test
+  public void givenInvalidConeId_whenCallsGetConeById_thenReturnsNotFound() throws Exception {
+    // given
+    final var coneId = 999;
+    final var expectedMessage = "Cone not found with id: " + coneId;
+
+    when(coneService.getConeById(coneId)).thenThrow(new IllegalArgumentException(expectedMessage));
+
+    // when
+    final var request = get("/cone/" + coneId)
+        .contentType(MediaType.APPLICATION_JSON);
+
+    final var response = mockMvc.perform(request);
+
+    // then
+    response.andExpect(status().isInternalServerError())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.message").value(expectedMessage))
+        .andExpect(jsonPath("$.error").value("An unexpected error occurred"));
+
+    verify(coneService, times(1)).getConeById(eq(999));
+  }
+
+  @Test
   public void givenCones_whenGetAllCones_thenReturnsCones() throws Exception {
     // given
     final var cone1 = new GetConeResponseDto(1, "Waffle", "M");
     final var cone2 = new GetConeResponseDto(2, "Sugar", "L");
 
-    // when
     when(coneService.getAllCones()).thenReturn(List.of(cone1, cone2));
 
+    // when
     final var request = get("/cone")
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -139,9 +185,9 @@ public class ConeControllerTest {
     // given
     final var cone1 = new GetConeResponseDto(1, "Waffle", "M");
 
-    // when
     when(coneService.searchAllConesBySize("M")).thenReturn(List.of(cone1));
 
+    // when
     final var request = get("/cone?size=M")
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -176,9 +222,10 @@ public class ConeControllerTest {
 
   @Test
   public void givenNoCones_whenGetAllCones_thenReturnsEmptyList() throws Exception {
-    // when
+    // given
     when(coneService.getAllCones()).thenReturn(List.of());
 
+    // when
     final var request = get("/cone")
         .contentType(MediaType.APPLICATION_JSON);
 

@@ -55,9 +55,9 @@ public class IceCreamControllerTest {
         input.price(),
         input.coneId());
 
-    // when
     when(iceCreamService.createIceCream(input)).thenReturn(expectedOutput);
 
+    // when
     final var request = post("/ice-cream")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(input));
@@ -142,9 +142,9 @@ public class IceCreamControllerTest {
         new BigDecimal("5.00"),
         cone);
 
-    // when
     when(iceCreamService.getIceCreamById(iceCreamId)).thenReturn(expectedOutput);
 
+    // when
     final var request = get("/ice-cream/" + iceCreamId)
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -170,9 +170,9 @@ public class IceCreamControllerTest {
     final var iceCreamId = 999;
     final var expectedMessage = "Ice cream not found with id: " + iceCreamId;
 
-    // when
-    when(iceCreamService.getIceCreamById(iceCreamId)).thenThrow(new RuntimeException(expectedMessage));
+    when(iceCreamService.getIceCreamById(iceCreamId)).thenThrow(new IllegalArgumentException(expectedMessage));
 
+    // when
     final var request = get("/ice-cream/" + iceCreamId)
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -204,9 +204,9 @@ public class IceCreamControllerTest {
         new BigDecimal("6.00"),
         cone);
 
-    // when
     when(iceCreamService.getAllIceCreams(null)).thenReturn(List.of(iceCream1, iceCream2));
 
+    // when
     final var request = get("/ice-cream")
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -244,9 +244,9 @@ public class IceCreamControllerTest {
         new BigDecimal("5.00"),
         cone);
 
-    // when
     when(iceCreamService.getAllIceCreams("M")).thenReturn(List.of(iceCream1));
 
+    // when
     final var request = get("/ice-cream?size=M")
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -285,9 +285,10 @@ public class IceCreamControllerTest {
 
   @Test
   public void givenNoIceCreams_whenGetAllIceCreams_thenReturnsEmptyList() throws Exception {
-    // when
+    // then
     when(iceCreamService.getAllIceCreams(null)).thenReturn(List.of());
 
+    // when
     final var request = get("/ice-cream")
         .contentType(MediaType.APPLICATION_JSON);
 
