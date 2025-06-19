@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jrpolesi.ice_cream_api.entities.IceCream;
@@ -26,7 +25,7 @@ import com.jrpolesi.ice_cream_api.repository.model.IceCreamModel;
 class IceCreamGatewayTest {
     @Autowired
     private IIceCreamRepository iceCreamRepository;
-    
+
     @Autowired
     private IConeRepository coneRepository;
 
