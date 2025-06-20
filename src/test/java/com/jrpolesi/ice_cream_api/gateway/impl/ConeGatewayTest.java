@@ -10,8 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jrpolesi.ice_cream_api.Fixtures;
 import com.jrpolesi.ice_cream_api.entities.Cone;
-import com.jrpolesi.ice_cream_api.gateway.Fixtures;
 import com.jrpolesi.ice_cream_api.repository.IConeRepository;
 import com.jrpolesi.ice_cream_api.repository.model.ConeModel;
 

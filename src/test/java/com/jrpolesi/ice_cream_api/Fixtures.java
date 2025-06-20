@@ -1,4 +1,4 @@
-package com.jrpolesi.ice_cream_api.gateway;
+package com.jrpolesi.ice_cream_api;
 
 import java.math.BigDecimal;
 
