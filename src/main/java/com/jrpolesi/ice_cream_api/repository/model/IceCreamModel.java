@@ -59,4 +59,20 @@ public class IceCreamModel {
   public Integer getId() {
     return id;
   }
+
+  public String getFlavor() {
+    return flavor;
+  }
+
+  public String getSize() {
+    return size;
+  }
+
+  public BigDecimal getPrice() {
+    return price;
+  }
+
+  public ConeModel getCone() {
+    return cone;
+  }
 }
